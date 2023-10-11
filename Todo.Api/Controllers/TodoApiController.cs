@@ -21,7 +21,7 @@ namespace Todo.Api.Controllers
             {
                 Id = i,
                 Title = $"Todo {i}",
-                Completed = i % 2 == 0
+                Completed = true
             }).ToList();
         }
 
