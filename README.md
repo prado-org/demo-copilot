@@ -1,5 +1,5 @@
-Format 
-Shift + Alt + F
+Format: Shift + Alt + F
+Copilot Suggestion: Ctrl + Enter
 
 # TodoAPI
 Selecionar o codigo e clicar em copilot-> start code chat
@@ -33,9 +33,6 @@ in my client project, create a method to create todo item
 How can I test the POST and PUT endpoints of my TodoApi using MSTest?
 
 
-
-
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net;
-using System.Net.Http.Json;
-using Todo.Api.Model;
+# Copilot Chat
+Me: Hello copilot!
+Copilot: Hello, World!
