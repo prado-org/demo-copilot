@@ -17,20 +17,19 @@ namespace Todo.Api.Controllers
         public TodoApiController(ILogger<TodoApiController> logger)
         {
             _logger = logger;
-            _todos = new List<TodoModel>();
+            _todos = Enumerable.Range(1, 100).Select(i => new TodoModel
+            {
+                Id = i,
+                Title = $"Todo {i}",
+                Completed = i % 2 == 0
+            }).ToList();
         }
 
         [HttpGet]
         public IActionResult Get()
         {
             _logger.LogInformation("Retrieving all Todo items");
-            var todos = Enumerable.Range(1, 100).Select(i => new TodoModel
-            {
-                Id = i,
-                Title = $"Todo {i}",
-                Completed = true
-            }).ToList();
-            return Ok(todos);
+            return Ok(_todos);
         }
     }
 }
