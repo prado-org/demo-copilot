@@ -29,10 +29,10 @@ jobs:
       run: dotnet build copilot.sln --no-restore
     
     - name: Publish Api
-      run: dotnet publish Todo.Api.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishApi
+      run: dotnet publish Todo.Api/Todo.Api.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishApi
       
     - name: Publish Client
-      run: dotnet publish Todo.Client.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishClient
+      run: dotnet publish Todo.Client/Todo.Client.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishClient
       
     - name: Upload Api Artifact
       uses: actions/upload-artifact@v3
