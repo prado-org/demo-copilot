@@ -17,12 +17,14 @@ namespace Todo.Api.Controllers
         public TodoApiController(ILogger<TodoApiController> logger)
         {
             _logger = logger;
-            _todos = Enumerable.Range(1, 100).Select(i => new TodoModel
+            _todos = new List<TodoModel>
             {
-                Id = i,
-                Title = $"Todo {i}",
-                Completed = true
-            }).ToList();
+                new TodoModel { Id = 1, Title = "Todo 1", Completed = false },
+                new TodoModel { Id = 2, Title = "Todo 2", Completed = false },
+                new TodoModel { Id = 3, Title = "Todo 3", Completed = false },
+                new TodoModel { Id = 4, Title = "Todo 4", Completed = false },
+                new TodoModel { Id = 5, Title = "Todo 5", Completed = false },
+            };
         }
 
         [HttpGet]
