@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Todo.Client.Model;
 
@@ -11,9 +11,18 @@ class Program
 {
     static async Task Main(string[] args)
     {
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+        });
+
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogInformation("Starting Todo Client");
+
+        Console.WriteLine("Hello Todo Client");
         using var client = new HttpClient();
         
-        var response = await client.GetFromJsonAsync<List<TodoModel>>("http://localhost:5071/TodoApi");
+        var response = await client.GetFromJsonAsync<List<TodoModel>>("https://localhost:7086/TodoApi");
         if (response != null)
         {
             foreach (var todo in response)
@@ -21,5 +30,12 @@ class Program
                 Console.WriteLine($"Id: {todo.Id}, Title: {todo.Title}, Completed: {todo.Completed}");
             }
         }
+        else
+        {
+            Console.WriteLine("No response from server");
+        }
+
+        Console.WriteLine("Press any key to exit");
+        Console.Read();
     }
 }
