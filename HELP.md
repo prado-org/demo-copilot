@@ -37,3 +37,25 @@ How can I test the POST and PUT endpoints of my TodoApi using MSTest?
 # Copilot Chat
 Me: Hello copilot!
 Copilot: Hello, World!
+
+
+# Coplot Enterprise
+Entrar no repo dotnetcore-webapp
+qual objetivo desse repositório?
+quais os projetos contidos nesse reporiório?
+como eu posso executar esse projeto?
+explique as pastas na raiz desse repositorio?
+
+onde os TodosItems são listados?
+
+
+
+
+descreva objetivo desse repositório
+código para salvar um estudante na base de dados
+Atachar o controller student - descreva os métodos desse controller
+criar um novo método Search com o parametro LastName
+
+
+
+

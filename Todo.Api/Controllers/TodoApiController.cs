@@ -33,5 +33,45 @@ namespace Todo.Api.Controllers
             _logger.LogInformation("Retrieving all Todo items");
             return Ok(_todos);
         }
+
+        /// <summary>
+        /// Retrieves a Todo item by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the Todo item to retrieve.</param>
+        /// <returns>The retrieved Todo item if found, otherwise returns a NotFound result.</returns>
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            _logger.LogInformation($"Retrieving Todo item with id {id}");
+            var todo = _todos.FirstOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                _logger.LogWarning($"Todo item with id {id} not found");
+                return NotFound();
+            }
+            return Ok(todo);
+        }
+
+        // criar um metodo para deletar um TodoItem
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _logger.LogInformation($"Deleting Todo item with id {id}");
+            var todo = _todos.FirstOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                _logger.LogWarning($"Todo item with id {id} not found");
+                return NotFound();
+            }
+            _todos.Remove(todo);
+            return Ok();
+        }
+
+        
+
+
+
+
+
     }
 }
