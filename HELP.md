@@ -55,7 +55,7 @@ criar um novo método Search com o parametro LastName
 ## Others Samples
 
 Generate a dotnet core class diagram based on the mermaid code below.
-
+```mermaid
 classDiagram
     Order "1" -- "1..10" LineItem : contains
     LineItem "1" -- "1" Item : has
@@ -76,3 +76,4 @@ classDiagram
         +itemPrice: Number
     }
     
+```
