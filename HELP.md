@@ -54,26 +54,30 @@ criar um novo método Search com o parametro LastName
 
 ## Others Samples
 
-Generate a dotnet core class diagram based on the mermaid code below.
+criar um diagrama de classe usando o mermaid para um fluxo onde um cliente faz uma compra em um ecommerce
+
 ```mermaid
 classDiagram
-    Order "1" -- "1..10" LineItem : contains
-    LineItem "1" -- "1" Item : has
+    Customer "1" -- "1..*" Order : places
+    Order "1" -- "*" Product : contains
+    class Customer {
+        +name: String
+        +email: String
+        +address: String
+    }
     class Order {
-        +status: Received | Rejected | Accepted
-        +totalAmount: Number
-        +lineItems: LineItem[]
+        +orderId: Integer
+        +date: Date
+        +status: Received | Processing | Shipped | Delivered
+        +totalPrice: Number
+        +products: Product[]
     }
-    class LineItem {
-        +itemId: Integer
-        +lineItemPrice: Number
-        +lineItemQuantity: Integer
+    class Product {
+        +productId: Integer
+        +productName: String
+        +productDescription: String
+        +productPrice: Number
     }
-    class Item {
-        +itemId: Integer
-        +itemName: String
-        +itemDescription: String
-        +itemPrice: Number
-    }
-    
 ```
+
+gere as classes baseado no diagrama mermaid acima na linguagem dotnet core 8
