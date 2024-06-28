@@ -23,7 +23,7 @@ jobs:
         dotnet-version: 7.0.x
     
     - name: Restore dependencies
-      run: dotnet restore copilot.sln
+      run: dotnet restore copilot.sln --locked-mode
       
     - name: Build
       run: dotnet build copilot.sln --no-restore
