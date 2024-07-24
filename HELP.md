@@ -1,11 +1,9 @@
 # Help - Prompt Samples
 
 ## TodoAPI
-Selecionar o codigo e clicar em copilot-> start code chat
-change the method Get to return a list of TodoModel class with 50 examples 
-diferent values for completed field
+Select the code and click on "copilot-> start code chat" and enter the prompt "change the method Get to return a list of TodoModel class with 50 examples different values ​​for completed field"
 
-// create a new method to retrieve a TodoModel object by its Id
+create a new method to retrieve a TodoModel object by its Id
 
 Chat
 create CRUD methods for TodoAPI
