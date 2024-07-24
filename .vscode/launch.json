@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Todo.Client",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildClient",
+            "program": "${workspaceFolder}/Todo.Client/bin/Debug/net7.0/Todo.Client.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Todo.Client",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Todo.Api",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildApi",
+            "program": "${workspaceFolder}/Todo.Api/bin/Debug/net7.0/Todo.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Todo.Api",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Api and App",
+            "configurations": [
+                "Todo.Client",
+                "Todo.Api"
+            ]
+        }
+    ]
+}

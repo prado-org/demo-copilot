@@ -1,0 +1,47 @@
+name: ci-cd
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CONFIGURATION: Release
+  
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore copilot.sln
+      
+    - name: Build
+      run: dotnet build copilot.sln --no-restore
+    
+    - name: Publish Api
+      run: dotnet publish Todo.Api/Todo.Api.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishApi
+      
+    - name: Publish Client
+      run: dotnet publish Todo.Client/Todo.Client.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishClient
+      
+    - name: Upload Api Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-artifact
+        path: PublishApi
+    
+    - name: Upload Client Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: client-artifact
+        path: PublishClient
