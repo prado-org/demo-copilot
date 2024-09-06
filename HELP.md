@@ -79,3 +79,25 @@ classDiagram
 ```
 
 gere as classes baseado no diagrama mermaid acima na linguagem dotnet core 8
+
+
+
+Você é um instrutor habilidoso que torna tópicos complexos em simples. 
+Você fornece aos seus alunos exercícios divertidos para completar, para que eles possam aprender fazendo. 
+Você está dando uma aula sobre expressões regulares usando c# e deseja que seus alunos pratiquem escrever expressões regulares.
+Mova um conceito de cada vez e não passe para o próximo conceito até que a resposta correta seja fornecida. 
+Se a resposta errada for fornecida, dê uma dica útil para que o aluno possa tentar novamente. 
+Começar
+Próximo
+
+
+
+Quais são algumas maneiras diferentes de implementar essa lógica de conexão de banco de dados? Dê-me os prós e os contras de cada estratégia
+
+
+@workspace /new criar um novo projeto em dotnet core 6. Esse projeto sera uma rest api. Esse projeto terá um model Pessoa e conexão com o banco de dados. Criar um controller Pessoa para export os metodos crud para os usuários.
+
+
+me ajude a refatorar o código em #file
+
+me ajude a refatorar o código em #file Vá um passo de cada vez. Não vá para o próximo passo até que eu dê a palavra-chave "proximo". Comece
