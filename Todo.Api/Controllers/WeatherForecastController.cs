@@ -31,21 +31,35 @@ public class WeatherForecastController : ControllerBase
         .ToArray();
     }
 
+    /// <summary>
+    /// Retrieves a WeatherForecast by its ID from the database.
+    /// </summary>
+    /// <param name="id">The ID of the WeatherForecast to retrieve.</param>
+    /// <returns>The WeatherForecast object if found; otherwise, null.</returns>
+    /// <exception cref="Exception">Thrown when the database connection string is not found or an error occurs while retrieving the weather forecast.</exception>
     private WeatherForecast WeatherForecastById(int id)
     {
         try
         {
             WeatherForecast item = null;
-            using SqlConnection connection = new SqlConnection("Server=localhost;Database=Todo;User Id=sa;Password=Password123;");
-            connection.OpenAsync();
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             
-            string selectCommand = "SELECT * FROM WeatherForecast WHERE id = " + id.ToString();
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("A string de conexão com o banco de dados não foi encontrada.");
+            }
 
-            SqlCommand command = new SqlCommand(selectCommand, connection);
+            using SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
 
-            SqlDataReader reader = command.ExecuteReader();
+            string selectCommand = "SELECT Date, Summary, TemperatureC FROM WeatherForecast WHERE id = @id";
+
+            using SqlCommand command = new SqlCommand(selectCommand, connection);
+            command.Parameters.AddWithValue("@id", id);
+
+            using SqlDataReader reader = command.ExecuteReader();
             
-            while (reader.Read())
+            if (reader.Read())
             {
                 DateTime data = reader.GetDateTime(0);
                 string summary = reader.GetString(1);
@@ -56,8 +70,14 @@ public class WeatherForecastController : ControllerBase
 
             return item;
         }
-        catch(Exception)
+        catch (SqlException ex)
         {
+            _logger.LogError(ex, "An error occurred while retrieving the weather forecast.");
+            throw new Exception("An error occurred while retrieving the weather forecast.", ex);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An unexpected error occurred.");
             throw;
         }
     }
