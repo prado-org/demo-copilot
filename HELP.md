@@ -36,23 +36,23 @@ Copilot: Hello, World!
 
 
 ## Coplot Enterprise
-Entrar no repo dotnetcore-webapp
-qual objetivo desse repositório?
-quais os projetos contidos nesse reporiório?
-como eu posso executar esse projeto?
-explique as pastas na raiz desse repositorio?
+what is the purpose of this repository?
+what projects are contained in this repository?
+how can I run this project?
+explain the folders in the root of this repository?
+Where are the TodoItems listed?
+what is the purpose of the TodoModel class?
+what is the purpose of the TodoController class?
+what is the purpose of the TodoService class?
 
-onde os TodosItems são listados?
-
-descreva objetivo desse repositório
-código para salvar um estudante na base de dados
-Atachar o controller student - descreva os métodos desse controller
-criar um novo método Search com o parametro LastName
-
+Attach the student controller file and then -> describe the methods of this controller
 
 ## Others Samples
 
-criar um diagrama de classe usando o mermaid para um fluxo onde um cliente faz uma compra em um ecommerce
+
+### Mermaid
+
+create a class diagram using mermaid for a flow where a customer makes a purchase in an ecommerce
 
 ```mermaid
 classDiagram
@@ -77,27 +77,29 @@ classDiagram
         +productPrice: Number
     }
 ```
+generate the classes based on the mermaid diagram above in dotnet core 8 language
 
-gere as classes baseado no diagrama mermaid acima na linguagem dotnet core 8
+### Instructor Class
 
+You are a skilled instructor who makes complex topics simple.
+You provide your students with fun exercises to complete so they can learn by doing.
+You are giving a class on regular expressions using C# and want your students to practice writing regular expressions.
+Move one concept at a time and do not move to the next concept until the correct answer is provided.
+If the wrong answer is provided, give a helpful hint so the student can try again.
+Start
 
+For next instructions, send the keyword "next" in the chat
 
-Você é um instrutor habilidoso que torna tópicos complexos em simples. 
-Você fornece aos seus alunos exercícios divertidos para completar, para que eles possam aprender fazendo. 
-Você está dando uma aula sobre expressões regulares usando c# e deseja que seus alunos pratiquem escrever expressões regulares.
-Mova um conceito de cada vez e não passe para o próximo conceito até que a resposta correta seja fornecida. 
-Se a resposta errada for fornecida, dê uma dica útil para que o aluno possa tentar novamente. 
-Começar
-Próximo
+### Pros and Cons
 
+What are some different ways to implement this database connection logic? Give me the pros and cons of each strategy
 
-
-Quais são algumas maneiras diferentes de implementar essa lógica de conexão de banco de dados? Dê-me os prós e os contras de cada estratégia
-
+### Workspace /new 
 
 @workspace /new criar um novo projeto em dotnet core 6. Esse projeto sera uma rest api. Esse projeto terá um model Pessoa e conexão com o banco de dados. Criar um controller Pessoa para export os metodos crud para os usuários.
 
+### Refactor the code
 
-me ajude a refatorar o código em #file
+help me refactor the code in #file
 
-me ajude a refatorar o código em #file Vá um passo de cada vez. Não vá para o próximo passo até que eu dê a palavra-chave "proximo". Comece
+help me refactor the code in #file. Go one step at a time. Do not move to the next step until I give the keyword "next". Start
