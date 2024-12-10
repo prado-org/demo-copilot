@@ -17,21 +17,113 @@ namespace Todo.Api.Controllers
         public TodoApiController(ILogger<TodoApiController> logger)
         {
             _logger = logger;
-            _todos = new List<TodoModel>
+            _todos = new List<TodoModel>();
+
+            for (int i = 1; i <= 1000; i++)
             {
-                new TodoModel { Id = 1, Title = "Todo 1", Completed = false },
-                new TodoModel { Id = 2, Title = "Todo 2", Completed = false },
-                new TodoModel { Id = 3, Title = "Todo 3", Completed = false },
-                new TodoModel { Id = 4, Title = "Todo 4", Completed = false },
-                new TodoModel { Id = 5, Title = "Todo 5", Completed = false },
-            };
+                _todos.Add(new TodoModel
+                {
+                    Id = i,
+                    Title = $"Todo {i}",
+                    Completed = i % 2 == 0 // Alterna entre true e false
+                });
+            }
         }
 
+        /// <summary>
+        /// Retrieves all Todo items.
+        /// </summary>
+        /// <returns>An <see cref="IActionResult"/> containing the list of Todo items.</returns>
         [HttpGet]
         public IActionResult Get()
         {
             _logger.LogInformation("Retrieving all Todo items");
             return Ok(_todos);
         }
+
+        /// <summary>
+        /// Retrieves a Todo item by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the Todo item.</param>
+        /// <returns>An <see cref="IActionResult"/> containing the Todo item.</returns>
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            _logger.LogInformation($"Retrieving Todo item with ID: {id}");
+            var todoItem = _todos.FirstOrDefault(t => t.Id == id);
+            if (todoItem == null)
+            {
+                return NotFound();
+            }
+            return Ok(todoItem);
+        }
+
+        /// <summary>
+    /// Creates a new Todo item.
+    /// </summary>
+    /// <param name="todoItem">The Todo item to create.</param>
+    /// <returns>An <see cref="IActionResult"/> containing the created Todo item.</returns>
+    [HttpPost]
+    public IActionResult Create([FromBody] TodoModel todoItem)
+    {
+        if (todoItem == null)
+        {
+            return BadRequest();
+        }
+
+        if (!IsValidTitle(todoItem.Title))
+        {
+            return BadRequest("Title can't contain special characters");
+        }
+
+        todoItem.Id = _todos.Max(t => t.Id) + 1; // Assign a new ID
+        _todos.Add(todoItem);
+
+        _logger.LogInformation($"Created new Todo item with ID: {todoItem.Id}");
+        return CreatedAtAction(nameof(GetById), new { id = todoItem.Id }, todoItem);
+    }
+
+    /// <summary>
+    /// Updates an existing Todo item.
+    /// </summary>
+    /// <param name="id">The ID of the Todo item to update.</param>
+    /// <param name="todoItem">The updated Todo item.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the result of the operation.</returns>
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] TodoModel todoItem)
+    {
+        if (todoItem == null)
+        {
+            return BadRequest();
+        }
+
+        var existingTodoItem = _todos.FirstOrDefault(t => t.Id == id);
+        if (existingTodoItem == null)
+        {
+            return NotFound();
+        }
+
+        if (!IsValidTitle(todoItem.Title))
+        {
+            return BadRequest("Title can't contain special characters");
+        }
+
+        existingTodoItem.Title = todoItem.Title;
+        existingTodoItem.Completed = todoItem.Completed;
+
+        _logger.LogInformation($"Updated Todo item with ID: {id}");
+        return Ok(existingTodoItem);
+    }
+
+    private bool IsValidTitle(string title)
+    {
+        return System.Text.RegularExpressions.Regex.IsMatch(title, @"^[a-zA-Z0-9\s]*$");
+    }
+
+
+
+
+
+
     }
 }
