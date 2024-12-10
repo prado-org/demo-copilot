@@ -17,14 +17,12 @@ namespace Todo.Api.Controllers
         public TodoApiController(ILogger<TodoApiController> logger)
         {
             _logger = logger;
-            _todos = new List<TodoModel>
+            _todos = new List<TodoModel>();
+            
+            for (int i = 1; i <= 1000; i++)
             {
-                new TodoModel { Id = 1, Title = "Todo 1", Completed = false },
-                new TodoModel { Id = 2, Title = "Todo 2", Completed = false },
-                new TodoModel { Id = 3, Title = "Todo 3", Completed = false },
-                new TodoModel { Id = 4, Title = "Todo 4", Completed = false },
-                new TodoModel { Id = 5, Title = "Todo 5", Completed = false },
-            };
+                _todos.Add(new TodoModel { Id = i, Title = $"Todo {i}", Completed = i % 2 == 0 });
+            }
         }
 
         [HttpGet]
@@ -33,5 +31,73 @@ namespace Todo.Api.Controllers
             _logger.LogInformation("Retrieving all Todo items");
             return Ok(_todos);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            _logger.LogInformation($"Retrieving Todo item with id {id}");
+            var todo = _todos.FirstOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                _logger.LogWarning($"Todo item with id {id} not found");
+                return NotFound();
+            }
+            return Ok(todo);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _logger.LogInformation($"Deleting Todo item with id {id}");
+            var todo = _todos.FirstOrDefault(t => t.Id == id);
+            if (todo == null)
+            {
+                _logger.LogWarning($"Todo item with id {id} not found");
+                return NotFound();
+            }
+        
+            _todos.Remove(todo);
+            _logger.LogInformation($"Todo item with id {id} deleted");
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] TodoModel updatedTodo)
+        {
+            if (updatedTodo == null || updatedTodo.Id != id)
+            {
+                _logger.LogWarning("Invalid Todo item received");
+                return BadRequest();
+            }
+        
+            var existingTodo = _todos.FirstOrDefault(t => t.Id == id);
+            if (existingTodo == null)
+            {
+                _logger.LogWarning($"Todo item with id {id} not found");
+                return NotFound();
+            }
+        
+            existingTodo.Title = updatedTodo.Title;
+            existingTodo.Completed = updatedTodo.Completed;
+            _logger.LogInformation($"Todo item with id {id} updated");
+            return NoContent();
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] TodoModel newTodo)
+        {
+            if (newTodo == null)
+            {
+                _logger.LogWarning("Invalid Todo item received");
+                return BadRequest();
+            }
+        
+            newTodo.Id = _todos.Max(t => t.Id) + 1;
+            _todos.Add(newTodo);
+            _logger.LogInformation($"Todo item with id {newTodo.Id} created");
+            return CreatedAtAction(nameof(Get), new { id = newTodo.Id }, newTodo);
+        }
+
+
     }
 }
