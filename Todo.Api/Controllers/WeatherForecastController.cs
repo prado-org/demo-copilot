@@ -31,33 +31,36 @@ public class WeatherForecastController : ControllerBase
         .ToArray();
     }
 
-    private WeatherForecast WeatherForecastById(int id)
+        private async Task<WeatherForecast> WeatherForecastByIdAsync(int id)
     {
         try
         {
             WeatherForecast item = null;
             using SqlConnection connection = new SqlConnection("Server=localhost;Database=Todo;User Id=sa;Password=Password123;");
-            connection.OpenAsync();
+            await connection.OpenAsync();
+    
+            string selectCommand = "SELECT Date, Summary, TemperatureC FROM WeatherForecast WHERE id = @id";
+    
+            using SqlCommand command = new SqlCommand(selectCommand, connection);
+            command.Parameters.AddWithValue("@id", id);
+    
+            using SqlDataReader reader = await command.ExecuteReaderAsync();
             
-            string selectCommand = "SELECT * FROM WeatherForecast WHERE id = " + id.ToString();
-
-            SqlCommand command = new SqlCommand(selectCommand, connection);
-
-            SqlDataReader reader = command.ExecuteReader();
-            
-            while (reader.Read())
+            if (await reader.ReadAsync())
             {
                 DateTime data = reader.GetDateTime(0);
                 string summary = reader.GetString(1);
                 int temperature = reader.GetInt32(2);
-
+    
                 item = new WeatherForecast { Date = DateOnly.FromDateTime(data), Summary = summary, TemperatureC = temperature };
             }
-
+    
             return item;
         }
-        catch(Exception)
+        catch (Exception ex)
         {
+            // Log the exception (consider using a logging framework)
+            _logger.LogError(ex, "An error occurred while retrieving the weather forecast.");
             throw;
         }
     }
