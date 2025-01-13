@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Xml;
 
 namespace Todo.Api.Controllers;
 
@@ -59,6 +60,17 @@ public class WeatherForecastController : ControllerBase
         catch(Exception)
         {
             throw;
+        }
+    }
+
+    private void ProcessRequest(string employeeName)
+    {
+        using (XmlWriter writer = XmlWriter.Create("employees.xml"))
+        {
+            writer.WriteStartDocument();
+            writer.WriteRaw("<employee><name>" + employeeName + "</name></employee>");
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
         }
     }
 }
