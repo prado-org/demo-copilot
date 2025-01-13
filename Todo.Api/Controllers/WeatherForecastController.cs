@@ -68,7 +68,7 @@ public class WeatherForecastController : ControllerBase
         using (XmlWriter writer = XmlWriter.Create("employees.xml"))
         {
             writer.WriteStartDocument();
-            writer.WriteRaw("<employee><name>" + employeeName + "</name></employee>");
+            writer.WriteElementString("name", employeeName);
             writer.WriteEndElement();
             writer.WriteEndDocument();
         }
