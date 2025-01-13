@@ -73,14 +73,4 @@ public class WeatherForecastController : ControllerBase
             writer.WriteEndDocument();
         }
     }
-
-    public double CalculateAverage(int[] numbers)
-    {
-        int sum = 0;
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            sum += numbers[i];
-        }
-        return sum / numbers.Length;
-    }
 }
