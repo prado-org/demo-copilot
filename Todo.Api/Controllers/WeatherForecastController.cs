@@ -37,15 +37,16 @@ public class WeatherForecastController : ControllerBase
         {
             WeatherForecast item = null;
             using SqlConnection connection = new SqlConnection("Server=localhost;Database=Todo;User Id=sa;Password=Password123;");
-            connection.OpenAsync();
-            
-            string selectCommand = "SELECT * FROM WeatherForecast WHERE id = " + id.ToString();
+            connection.Open();
+
+            string selectCommand = "SELECT Date, Summary, TemperatureC FROM WeatherForecast WHERE id = @id";
 
             SqlCommand command = new SqlCommand(selectCommand, connection);
+            command.Parameters.AddWithValue("@id", id);
 
-            SqlDataReader reader = command.ExecuteReader();
-            
-            while (reader.Read())
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
             {
                 DateTime data = reader.GetDateTime(0);
                 string summary = reader.GetString(1);
@@ -56,8 +57,14 @@ public class WeatherForecastController : ControllerBase
 
             return item;
         }
-        catch(Exception)
+        catch (SqlException ex)
         {
+            _logger.LogError(ex, "A SQL error occurred while fetching the weather forecast by id.");
+            throw new Exception("A database error occurred. Please try again later.");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while fetching the weather forecast by id.");
             throw;
         }
     }
