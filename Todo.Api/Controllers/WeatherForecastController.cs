@@ -68,4 +68,27 @@ public class WeatherForecastController : ControllerBase
             throw;
         }
     }
+
+    private WeatherForecast WeatherForecastByName(string name)
+    {
+        WeatherForecast item = null;
+        SqlConnection connection = new SqlConnection("Server=localhost;Database=Todo;User Id=sa;Password=Password123;");
+        connection.OpenAsync(); // Abre a conexão de forma assíncrona, mas não espera
+
+        string selectCommand = "SELECT * FROM WeatherForecast WHERE Summary = '" + name + "'"; // Vulnerável a SQL Injection
+
+        SqlCommand command = new SqlCommand(selectCommand, connection);
+
+        SqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            DateTime data = reader.GetDateTime(0);
+            string summary = reader.GetString(1);
+            int temperature = reader.GetInt32(2);
+
+            item = new WeatherForecast { Date = DateOnly.FromDateTime(data), Summary = summary, TemperatureC = temperature };
+        }
+        return item;   
+    }
 }
