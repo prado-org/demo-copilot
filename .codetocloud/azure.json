@@ -1,0 +1,68 @@
+{
+  "projectType": "azd",
+  "iacTypes": [
+    "bicep"
+  ],
+  "resources": [
+    {
+      "type": "azurecontainerapp",
+      "instances": [
+        {
+          "name": "todoapi"
+        },
+        {
+          "name": "todoclient"
+        }
+      ]
+    },
+    {
+      "type": "azuresqldatabase",
+      "instances": [
+        {
+          "name": "database0"
+        }
+      ]
+    }
+  ],
+  "bindings": [
+    {
+      "source": "${azurecontainerapp.todoapi}",
+      "target": "${azuresqldatabase.database0}",
+      "connection": "secret",
+      "store": "",
+      "customKeys": {
+        "AZURE_SQL_CONNECTIONSTRING": "AZURE_SQL_CONNECTIONSTRING",
+        "AZURE_SQL_SERVER": "AZURE_SQL_SERVER",
+        "AZURE_SQL_DATABASE": "AZURE_SQL_DATABASE",
+        "AZURE_SQL_USERNAME": "AZURE_SQL_USERNAME",
+        "AZURE_SQL_PASSWORD": "AZURE_SQL_PASSWORD",
+        "AZURE_SQL_PORT": "AZURE_SQL_PORT"
+      }
+    }
+  ],
+  "services": [
+    {
+      "host": "${azurecontainerapp.todoapi}",
+      "language": "dotnet",
+      "project": "Todo.Api/",
+      "port": "80"
+    },
+    {
+      "host": "${azurecontainerapp.todoclient}",
+      "language": "dotnet",
+      "project": "Todo.Client/",
+      "port": "80"
+    }
+  ],
+  "settings": [
+    {
+      "resource": "${azurecontainerapp.todoapi}",
+      "envs": [
+        {
+          "name": "ASPNETCORE_ENVIRONMENT",
+          "value": ""
+        }
+      ]
+    }
+  ]
+}

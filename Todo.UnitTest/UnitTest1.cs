@@ -36,4 +36,47 @@ public class UnitTest1
         response.EnsureSuccessStatusCode();
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
+
+    // criar um test para a funcao delete
+    [TestMethod]
+    public async Task DeleteTodo_ReturnsOk()
+    {
+        // Arrange
+        _client.BaseAddress = new Uri(_url);
+
+        // Act
+        var response = await _client.DeleteAsync("/TodoApi/1");
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    // criar um teste da funcao delete com um id inixistente.
+    [TestMethod]
+    public async Task DeleteTodo_ReturnsNotFound()
+    {
+        // Arrange
+        _client.BaseAddress = new Uri(_url);
+
+        // Act
+        var response = await _client.DeleteAsync("/TodoApi/100");
+
+        // Assert
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    // teste passado um id como string
+    [TestMethod]
+    public async Task DeleteTodo_ReturnsBadRequest()
+    {
+        // Arrange
+        _client.BaseAddress = new Uri(_url);
+
+        // Act
+        var response = await _client.DeleteAsync("/TodoApi/abc");
+
+        // Assert
+        Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+    }
 }
