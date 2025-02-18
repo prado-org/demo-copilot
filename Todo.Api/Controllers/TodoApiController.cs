@@ -27,6 +27,11 @@ namespace Todo.Api.Controllers
             };
         }
 
+        /// <summary>
+        /// Retrieves all Todo items.
+        /// </summary>
+        /// <returns>An <see cref="IActionResult"/> containing the list of Todo items.</returns>
+        /// <response code="200">Returns the list of Todo items.</response>
         [HttpGet]
         public IActionResult Get()
         {
