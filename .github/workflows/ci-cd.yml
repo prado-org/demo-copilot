@@ -35,13 +35,13 @@ jobs:
       run: dotnet publish Todo.Client/Todo.Client.csproj --no-build --configuration ${{ env.CONFIGURATION }} --output PublishClient
       
     - name: Upload Api Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: api-artifact
         path: PublishApi
     
     - name: Upload Client Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: client-artifact
         path: PublishClient
