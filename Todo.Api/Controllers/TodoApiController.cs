@@ -14,6 +14,13 @@ namespace Todo.Api.Controllers
         private readonly ILogger<TodoApiController> _logger;
         private readonly List<TodoModel> _todos;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TodoApiController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger instance to log information.</param>
+        /// <remarks>
+        /// This constructor initializes the controller with a predefined list of todo items.
+        /// </remarks>
         public TodoApiController(ILogger<TodoApiController> logger)
         {
             _logger = logger;
